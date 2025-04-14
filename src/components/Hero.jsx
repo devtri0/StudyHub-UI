@@ -3,9 +3,9 @@ import image from "../assets/images/Hero.jpg";
 
 const Hero = () => {
   return (
-    <div className="min-h-screen bg-white text-gray-800 font-sans">
+    <div className="bg-white text-gray-800 font-sans py-8 md:py-16 mt-15">
       {/* Hero Section */}
-      <main className="text-center mt-20 px-4">
+      <main className="text-center px-4 max-w-6xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 font-serif">
           Welcome to <br /> TutorConnect
         </h1>
@@ -24,7 +24,7 @@ const Hero = () => {
         </div>
 
         {/* Image with Play Button */}
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-4 md:py-10">
           <div className="relative">
             <img
               src={image}
