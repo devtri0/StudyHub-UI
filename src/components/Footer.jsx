@@ -19,15 +19,15 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Subscription */}
-          <div className="w-full max-w-md text-center mb-6">
-            <h2 className="text-base font-medium mb-3">
+          <div className="w-full max-w-md text-center mb-6 mt-10">
+            <h2 className="text-base font-medium mb-3 font-serif">
               Subscribe to our newsletter
             </h2>
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="flex-grow relative">
                 <Mail
                   size={16}
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600"
                 />
                 <input
                   type="email"
@@ -43,19 +43,19 @@ const Footer = () => {
         </div>
 
         {/* Navigation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5 mt-9">
           {/* Product Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3">Product</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Product</h3>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Features
             </a>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Pricing
             </a>
@@ -63,16 +63,16 @@ const Footer = () => {
 
           {/* Resources Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3">Resources</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Resources</h3>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Blog
             </a>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               User guides
             </a>
@@ -80,16 +80,16 @@ const Footer = () => {
 
           {/* Company Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3">Company</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Company</h3>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               About us
             </a>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Contact us
             </a>
@@ -97,16 +97,18 @@ const Footer = () => {
 
           {/* Plans & Pricing Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3">Plans & Pricing</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">
+              Plans & Pricing
+            </h3>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Personal
             </a>
             <a
               href="#"
-              className="text-gray-600 hover:text-gray-900 mb-2 text-sm"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
               Organization
             </a>
@@ -120,7 +122,7 @@ const Footer = () => {
           <div className="flex items-center mb-4 sm:mb-0">
             <div className="relative"></div>
             <div className="ml-4 text-sm text-blue-500">
-              © 2025 TutorsConnect
+              © 2025 TutorConnect
             </div>
           </div>
 

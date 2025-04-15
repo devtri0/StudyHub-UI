@@ -9,7 +9,7 @@ const FeaturedTutors = () => {
   const featuredTutors = [
     {
       id: 1,
-      name: "John Doe",
+      name: "Stephen Appiah",
       subject: "Mathematics",
       expertise: "Calculus",
       image: image1,
@@ -23,7 +23,7 @@ const FeaturedTutors = () => {
     },
     {
       id: 3,
-      name: "Michael Gray",
+      name: "Edward Addo",
       subject: "Chemistry",
       expertise: "Organic Chemistry",
       image: image3,
