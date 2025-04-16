@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import image from "../assets/images/T1.jpg";
 import image1 from "../assets/images/T4.jpg";
 import image2 from "../assets/images/T2.jpg";
@@ -9,53 +10,48 @@ import image5 from "../assets/images/T6.jpg";
 const TutorsGrid = () => {
   const tutors = [
     {
-      id: 1,
+      id: "1",
       name: "Emily Johnson",
       subjects: ["Math", "Physics"],
       availability: "Mon-Fri, 3-6 PM",
       image: image,
     },
     {
-      id: 2,
+      id: "2",
       name: "Michael Smith",
       subjects: ["Chemistry", "Biology"],
       availability: "Sat-Sun, 1-4 PM",
       image: image1,
     },
     {
-      id: 3,
+      id: "3",
       name: "Sarah Brown",
       subjects: ["English", "History"],
       availability: "Mon-Fri, 1-5 PM",
       image: image2,
     },
     {
-      id: 4,
+      id: "4",
       name: "James Wilson",
       subjects: ["Computer Science", "Math"],
       availability: "Wed-Fri, 2-7 PM",
       image: image3,
     },
     {
-      id: 5,
+      id: "5",
       name: "Jessica Lee",
       subjects: ["Art", "Music"],
       availability: "Mon-Sat, 10-3 PM",
       image: image4,
     },
     {
-      id: 6,
+      id: "6",
       name: "William Davis",
       subjects: ["Economics", "Business"],
       availability: "Tue-Thurs, 4-8 PM",
       image: image5,
     },
   ];
-
-  const handleViewProfile = (tutorId) => {
-    console.log(`Viewing profile of tutor with ID: ${tutorId}`);
-    // Add your navigation or modal open logic here
-  };
 
   return (
     <div className="container mx-auto p-4">
@@ -77,7 +73,6 @@ const TutorsGrid = () => {
             {/* Tutor Info */}
             <div className="p-4">
               <h3 className="font-medium text-lg">{tutor.name}</h3>
-
               <div className="text-sm text-gray-600 mt-1">
                 <p>
                   <span className="font-medium">Subjects: </span>
@@ -88,13 +83,12 @@ const TutorsGrid = () => {
                   {tutor.availability}
                 </p>
               </div>
-
-              <button
-                onClick={() => handleViewProfile(tutor.id)}
-                className="mt-3 w-full py-2 bg-white text-blue-500 border border-blue-500 rounded hover:bg-blue-50 transition-colors font-medium text-sm"
+              <Link
+                to={`/tutors/${tutor.id}`}
+                className="block mt-3 w-full text-center py-2 bg-white text-blue-500 border border-blue-500 rounded hover:bg-blue-50 transition-colors font-medium text-sm"
               >
                 View Profile
-              </button>
+              </Link>
             </div>
           </div>
         ))}
