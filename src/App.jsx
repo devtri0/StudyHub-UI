@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Tutors from "./pages/Tutors";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import TutorProfile from "./pages/TutorProfile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index={true} element={<Home />} />
           <Route path="/tutors" element={<Tutors />} />
+          <Route path="/tutors/:id" element={<TutorProfile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

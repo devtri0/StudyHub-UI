@@ -36,8 +36,11 @@ const Overview = () => {
               <span className="font-medium">Simple Booking System:</span> Easily
               schedule, manage, and handle payments for your lessons.
             </li>
+            <li>
+              <span className="font-medium">Transparent Pricing:</span> Pay a
+              simple flat rate with no hidden fees or surprises..
+            </li>
           </ul>
-
           <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition">
             Explore Now
           </button>

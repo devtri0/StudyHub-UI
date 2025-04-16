@@ -4,7 +4,6 @@ import image from "../assets/images/signup-bg.jpg";
 const SignUp = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Banner Section */}
       <div className="relative w-full h-64 md:h-80">
         <img
           src={image}
@@ -28,10 +27,8 @@ const SignUp = () => {
         </div>
       </div>
 
-      {/* Form Section */}
       <div className="max-w-3xl mx-auto bg-white p-10 mt-6 rounded-xl shadow-lg">
         <form className="space-y-6">
-          {/* First Name & Last Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-600 font-medium mb-1">
@@ -57,7 +54,6 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* Email & Password */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-600 font-medium mb-1">
@@ -83,7 +79,6 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* Password & Confirm Password */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-600 font-medium mb-1">
@@ -109,7 +104,6 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* User Role */}
           <div>
             <label className="block text-gray-600 font-medium mb-1">Role</label>
             <select
