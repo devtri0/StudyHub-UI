@@ -6,6 +6,8 @@ import Tutors from "./pages/Tutors";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import TutorProfile from "./pages/TutorProfile";
+import TutorDash from "./pages/TutorDash";
+import DashLayout from "./layouts/DashLayout";
 
 function App() {
   return (
@@ -18,6 +20,10 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+
+        <Route element={<DashLayout />}>
+          <Route path="/tutordash" element={<TutorDash />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

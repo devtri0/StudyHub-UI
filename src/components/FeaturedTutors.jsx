@@ -62,13 +62,6 @@ const FeaturedTutors = () => {
                 <p className="text-gray-600 mb-4">
                   Expertise: {tutor.expertise}
                 </p>
-                <a
-                  href={`/tutors/${tutor.id}`}
-                  className="text-blue-500 hover:text-blue-600 font-medium text-sm inline-flex items-center"
-                >
-                  View Profile
-                  <span className="ml-1">→</span>
-                </a>
               </div>
             </div>
           ))}
