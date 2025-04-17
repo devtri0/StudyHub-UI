@@ -46,71 +46,87 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5 mt-9">
           {/* Product Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3 font-serif">Product</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Contact</h3>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Features
+              tutorconnect@gmail.com
             </a>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Pricing
+              +233 55 950 4497
             </a>
           </div>
 
           {/* Resources Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3 font-serif">Resources</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">About</h3>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Blog
+              Home
             </a>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              User guides
+              Overview
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
+            >
+              Locations
             </a>
           </div>
 
           {/* Company Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3 font-serif">Company</h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Students</h3>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              About us
+              Information for prospective Students
             </a>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Contact us
+              Subjects
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
+            >
+              Levels of Study
             </a>
           </div>
 
           {/* Plans & Pricing Column */}
           <div className="flex flex-col">
-            <h3 className="font-medium text-base mb-3 font-serif">
-              Plans & Pricing
-            </h3>
+            <h3 className="font-medium text-base mb-3 font-serif">Tutors</h3>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Personal
+              Information for prospective Tutors
             </a>
             <a
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              Organization
+              Tutor Application Form
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
+            >
+              Tutor Rates
             </a>
           </div>
         </div>
