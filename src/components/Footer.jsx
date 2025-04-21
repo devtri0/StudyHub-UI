@@ -3,8 +3,8 @@ import { Twitter, Linkedin, Youtube, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <div className="max-w-6xl w-full mx-auto px-4 md:px-8 flex flex-col mt-17">
+    <div className="flex flex-col bg-gray-50">
+      <div className="max-w-6xl w-full mx-auto px-4 md:px-8 flex flex-col">
         {/* Logo and Header */}
         <div className="flex flex-col items-center justify-center pt-8 pb-4">
           <div className="flex items-center justify-center mb-4">
@@ -19,7 +19,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Subscription */}
-          <div className="w-full max-w-md text-center mb-6 mt-10">
+          <div className="w-full max-w-md text-center mb-6">
             <h2 className="text-base font-medium mb-3 font-serif">
               Subscribe to our newsletter
             </h2>
@@ -43,8 +43,7 @@ const Footer = () => {
         </div>
 
         {/* Navigation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-5 mt-9">
-          {/* Product Column */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Contact</h3>
             <a
@@ -61,7 +60,6 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Resources Column */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">About</h3>
             <a
@@ -84,7 +82,6 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Company Column */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Students</h3>
             <a
@@ -107,7 +104,6 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Plans & Pricing Column */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Tutors</h3>
             <a
@@ -132,32 +128,29 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer - with no excessive space above it */}
-      <div className="mt-auto w-full border-t border-gray-200 bg-gray-50 py-4">
+      {/* Bottom Footer */}
+      <div className="w-full border-t border-gray-200 bg-gray-50 py-4">
         <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center">
-          <div className="flex items-center mb-4 sm:mb-0">
-            <div className="relative"></div>
-            <div className="ml-4 text-sm text-blue-500">
-              © 2025 TutorConnect
-            </div>
+          <div className="text-sm text-blue-500 mb-4 sm:mb-0">
+            © 2025 TutorConnect
           </div>
-
-          <div className="flex items-center">
-            <a href="#" className="text-sm text-blue-500 mr-4">
-              Privacy
-            </a>
-            <a href="#" className="text-sm text-blue-500 mr-4">
-              Terms
-            </a>
-
-            <div className="flex space-x-3 ml-2">
-              <a href="#" className="text-blue-500 hover:text-blue-600">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <div className="flex gap-4 text-blue-500 text-sm">
+              <a href="#" className="hover:text-blue-600">
+                Privacy
+              </a>
+              <a href="#" className="hover:text-blue-600">
+                Terms
+              </a>
+            </div>
+            <div className="flex space-x-3">
+              <a href="#" className="hover:text-blue-600">
                 <Twitter size={18} />
               </a>
-              <a href="#" className="text-blue-500 hover:text-blue-600">
+              <a href="#" className="hover:text-blue-600">
                 <Linkedin size={18} />
               </a>
-              <a href="#" className="text-blue-500 hover:text-blue-600">
+              <a href="#" className="hover:text-blue-600">
                 <Youtube size={18} />
               </a>
             </div>

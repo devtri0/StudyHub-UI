@@ -1,11 +1,12 @@
 import React from "react";
 import image1 from "../assets/images/About Us.jpg";
+import { Link } from "react-router";
 
 const Overview = () => {
   return (
     <section className="w-full px-4 sm:px-6 py-12 bg-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4 md:px-8">
-        {/* Text Content */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-center px-4 md:px-8">
+        {/* Text Content - Always appears first on mobile/tablet */}
         <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4 font-serif">
             Platform Overview
@@ -41,18 +42,23 @@ const Overview = () => {
               simple flat rate with no hidden fees or surprises..
             </li>
           </ul>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition">
-            Explore Now
-          </button>
+          <Link
+            to="/signup"
+            className="bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition inline-block"
+          >
+            Register Now
+          </Link>
         </div>
 
-        {/* Image */}
-        <div className="w-full">
-          <img
-            src={image1}
-            alt="Tutor and Student"
-            className="rounded-lg shadow-md w-full object-cover"
-          />
+        {/* Image - Now properly positioned after text on mobile/tablet */}
+        <div className="w-full flex justify-center">
+          <div className="max-w-md lg:max-w-none w-full">
+            <img
+              src={image1}
+              alt="Tutor and Student"
+              className="rounded-lg shadow-md w-full h-auto object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>

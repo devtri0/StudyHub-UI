@@ -1,5 +1,6 @@
 import React from "react";
 import image from "../assets/images/Hero.jpg";
+import { Link } from "react-router";
 
 const Hero = () => {
   return (
@@ -15,17 +16,20 @@ const Hero = () => {
 
         {/* Buttons */}
         <div className="flex justify-center gap-4 mb-8">
-          <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-            Join us now
-          </button>
-          <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-50">
-            Book a Tutor
-          </button>
+          <Link to="/signup">
+            <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+              Join us now
+            </button>
+          </Link>
+          <Link to="/tutors">
+            <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-50">
+              Book a Tutor
+            </button>
+          </Link>
         </div>
 
-        {/* Image with Play Button */}
         <div className="flex justify-center pb-4 md:py-10">
-          <div className="relative">
+          <div className="relative transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-105 hover:shadow-xl active:shadow-xl">
             <img
               src={image}
               alt="Students Group"
