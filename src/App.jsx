@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import TutorProfile from "./pages/TutorProfile";
 import TutorDash from "./pages/TutorDash";
 import DashLayout from "./layouts/DashLayout";
+import ProfileManagement from "./components/ProfileManagement";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
         <Route element={<DashLayout />}>
           <Route path="/tutordash" element={<TutorDash />} />
+          <Route path="/tutor/profile" element={<ProfileManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>
