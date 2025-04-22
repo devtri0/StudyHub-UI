@@ -1,12 +1,9 @@
+// TutorCard.js
 import React, { useState } from "react";
 
-const TutorCard = () => {
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [availability, setAvailability] = useState({
-    morning: false,
-    afternoon: false,
-    evening: false,
-  });
+const TutorCard = ({ onFilterChange, currentFilters }) => {
+  const [selectedSubject, setSelectedSubject] = useState(currentFilters.subject);
+  const [availability, setAvailability] = useState(currentFilters.availability);
 
   const subjects = [
     "English",
@@ -16,18 +13,29 @@ const TutorCard = () => {
     "Chemistry",
     "French",
     "Biology",
-    "Computer Science",
+    "Computer Science"
   ];
 
   const handleSubjectChange = (subject) => {
+    const newFilters = {
+      ...currentFilters,
+      subject
+    };
     setSelectedSubject(subject);
+    onFilterChange(newFilters);
   };
 
   const handleAvailabilityChange = (timeSlot) => {
-    setAvailability((prev) => ({
-      ...prev,
-      [timeSlot]: !prev[timeSlot],
-    }));
+    const newAvailability = {
+      ...availability,
+      [timeSlot]: !availability[timeSlot]
+    };
+    const newFilters = {
+      ...currentFilters,
+      availability: newAvailability
+    };
+    setAvailability(newAvailability);
+    onFilterChange(newFilters);
   };
 
   return (
