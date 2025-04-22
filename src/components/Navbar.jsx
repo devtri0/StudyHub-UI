@@ -52,7 +52,7 @@ const Navbar = () => {
                 className="flex items-center hover:text-blue-600"
                 onClick={() => toggleDropdown("students")}
               >
-                For Students
+                Students
                 <ChevronDown size={16} className="ml-1" />
               </button>
               {activeDropdown === "students" && (
@@ -73,45 +73,6 @@ const Navbar = () => {
               )}
             </li>
 
-            {/* Subjects Dropdown */}
-            <li className="relative">
-              <button
-                className="flex items-center hover:text-blue-600"
-                onClick={() => toggleDropdown("subjects")}
-              >
-                Subjects
-                <ChevronDown size={16} className="ml-1" />
-              </button>
-              {activeDropdown === "subjects" && (
-                <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
-                  <Link
-                    to="/subjects/english"
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    English
-                  </Link>
-                  <Link
-                    to="/subjects/french"
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    French
-                  </Link>
-                  <Link
-                    to="/subjects/math"
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    Math
-                  </Link>
-                  <Link
-                    to="/subjects/science"
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    Science
-                  </Link>
-                </div>
-              )}
-            </li>
-
             {/* Level of Study Dropdown */}
             <li className="relative">
               <button
@@ -124,19 +85,19 @@ const Navbar = () => {
               {activeDropdown === "levels" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
                   <Link
-                    to="/levels/jhs"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     JHS
                   </Link>
                   <Link
-                    to="/levels/shs"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     S.H.S
                   </Link>
                   <Link
-                    to="/levels/tertiary"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Tertiary
@@ -145,15 +106,31 @@ const Navbar = () => {
               )}
             </li>
 
-            <li>
-              <Link to="/tutors" className="hover:text-blue-600">
+            {/* Tutors Dropdown */}
+            <li className="relative">
+              <button
+                className="flex items-center hover:text-blue-600"
+                onClick={() => toggleDropdown("tutors")}
+              >
                 Tutors
-              </Link>
-            </li>
-            <li>
-              <Link to="/tutordash" className="hover:text-blue-600">
-                Dashboard
-              </Link>
+                <ChevronDown size={16} className="ml-1" />
+              </button>
+              {activeDropdown === "tutors" && (
+                <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
+                  <Link
+                    to="/tutors"
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  >
+                    Tutor List
+                  </Link>
+                  <Link
+                    to="/tutordash"
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  >
+                    Dashboard
+                  </Link>
+                </div>
+              )}
             </li>
           </ul>
         </div>
@@ -168,7 +145,7 @@ const Navbar = () => {
             Sign Up
           </Link>
           <Link
-            to="/signin"
+            to="/login"
             className="flex items-center gap-1 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-700 transition"
           >
             <LogIn size={16} />
@@ -193,7 +170,7 @@ const Navbar = () => {
                 className="flex items-center justify-between w-full text-gray-600 py-2"
                 onClick={() => toggleDropdown("mobile-students")}
               >
-                For Students
+                Students
                 <ChevronDown size={16} />
               </button>
               {activeDropdown === "mobile-students" && (
@@ -209,45 +186,6 @@ const Navbar = () => {
                     className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     Contact Us
-                  </Link>
-                </div>
-              )}
-            </li>
-
-            {/* Mobile Subjects Dropdown */}
-            <li className="mb-2">
-              <button
-                className="flex items-center justify-between w-full text-gray-600 py-2"
-                onClick={() => toggleDropdown("mobile-subjects")}
-              >
-                Subjects
-                <ChevronDown size={16} />
-              </button>
-              {activeDropdown === "mobile-subjects" && (
-                <div className="pl-4 mt-1">
-                  <Link
-                    to="/subjects/english"
-                    className="block py-2 text-gray-600 hover:text-blue-600"
-                  >
-                    English
-                  </Link>
-                  <Link
-                    to="/subjects/french"
-                    className="block py-2 text-gray-600 hover:text-blue-600"
-                  >
-                    French
-                  </Link>
-                  <Link
-                    to="/subjects/math"
-                    className="block py-2 text-gray-600 hover:text-blue-600"
-                  >
-                    Math
-                  </Link>
-                  <Link
-                    to="/subjects/science"
-                    className="block py-2 text-gray-600 hover:text-blue-600"
-                  >
-                    Science
                   </Link>
                 </div>
               )}
@@ -287,20 +225,29 @@ const Navbar = () => {
             </li>
 
             <li className="mb-2">
-              <Link
-                to="/tutors"
-                className="text-gray-600 hover:text-blue-600 block py-2"
+              <button
+                className="flex items-center justify-between w-full text-gray-600 py-2"
+                onClick={() => toggleDropdown("mobile-tutors")}
               >
                 Tutors
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link
-                to="/tutordash"
-                className="text-gray-600 hover:text-blue-600 block py-2"
-              >
-                Dashboard
-              </Link>
+                <ChevronDown size={16} />
+              </button>
+              {activeDropdown === "mobile-tutors" && (
+                <div className="pl-4 mt-1">
+                  <Link
+                    to="/tutors"
+                    className="block py-2 text-gray-600 hover:text-blue-600"
+                  >
+                    Tutor List
+                  </Link>
+                  <Link
+                    to="/tutordash"
+                    className="block py-2 text-gray-600 hover:text-blue-600"
+                  >
+                    Dashboard
+                  </Link>
+                </div>
+              )}
             </li>
             <li className="pt-2 border-t border-gray-200">
               <div className="flex flex-col space-y-2 my-2">
@@ -312,7 +259,7 @@ const Navbar = () => {
                   Sign Up
                 </Link>
                 <Link
-                  to="/signin"
+                  to="/login"
                   className="flex items-center justify-center gap-1 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium"
                 >
                   <LogIn size={16} />
