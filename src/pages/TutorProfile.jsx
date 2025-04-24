@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import { Link } from "react-router";
 
 const TutorProfile = () => {
   const { id } = useParams();
@@ -40,8 +41,17 @@ const TutorProfile = () => {
         <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              <svg
+                className="h-5 w-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
             <div className="ml-3">
@@ -98,7 +108,8 @@ const TutorProfile = () => {
             {tutor.firstName} {tutor.lastName}
           </h1>
           <p className="text-lg text-blue-600 font-semibold mb-4">
-            {tutor.profile?.specialization?.join(", ") || "No specialization listed"}
+            {tutor.profile?.specialization?.join(", ") ||
+              "No specialization listed"}
           </p>
 
           <p className="text-gray-600 max-w-2xl mb-6">
@@ -132,29 +143,45 @@ const TutorProfile = () => {
             </span>
             Teaching Approach & Education
           </h2>
-          
+
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Teaching Style</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">
+              Teaching Style
+            </h3>
             <p className="text-gray-600 bg-blue-50 px-4 py-3 rounded-lg">
               {tutor.style?.teachingStyle || "Not specified"}
             </p>
           </div>
-          
+
           <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Education</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">
+              Education
+            </h3>
             <ul className="space-y-3">
               {tutor.profile?.education?.map((item, index) => (
                 <li key={index} className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
                     <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      <svg
+                        className="w-3 h-3"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
                   </div>
                   <span className="ml-3 text-gray-700">{item}</span>
                 </li>
-              )) || <li className="text-gray-500">No education information provided</li>}
+              )) || (
+                <li className="text-gray-500">
+                  No education information provided
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -167,24 +194,34 @@ const TutorProfile = () => {
             </span>
             Expertise & Languages
           </h2>
-          
+
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Subjects</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">
+              Subjects
+            </h3>
             <div className="flex flex-wrap gap-3">
               {tutor.style?.subjects?.map((subject, index) => (
-                <div key={index} className="bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                <div
+                  key={index}
+                  className="bg-gray-50 px-4 py-2 rounded-lg border border-gray-200"
+                >
                   <p className="font-medium text-gray-800">{subject.name}</p>
                   <p className="text-xs text-gray-500">{subject.level} level</p>
                 </div>
               )) || <p className="text-gray-500">No subjects listed</p>}
             </div>
           </div>
-          
+
           <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Languages</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">
+              Languages
+            </h3>
             <div className="flex flex-wrap gap-3">
               {tutor.profile?.languages?.map((language, index) => (
-                <span key={index} className="px-4 py-2 bg-gray-50 text-gray-700 rounded-full text-sm font-medium border border-gray-200">
+                <span
+                  key={index}
+                  className="px-4 py-2 bg-gray-50 text-gray-700 rounded-full text-sm font-medium border border-gray-200"
+                >
                   {language}
                 </span>
               )) || <p className="text-gray-500">No languages listed</p>}
@@ -203,30 +240,50 @@ const TutorProfile = () => {
             </span>
             Availability
           </h2>
-          
+
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">General Availability</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+              General Availability
+            </h3>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="font-medium text-gray-800 mb-1">Weekdays: {tutor.availability?.generalAvailability?.weekdays?.start} - {tutor.availability?.generalAvailability?.weekdays?.end}</p>
-              <p className="font-medium text-gray-800">Weekends: {tutor.availability?.generalAvailability?.weekends?.start} - {tutor.availability?.generalAvailability?.weekends?.end}</p>
+              <p className="font-medium text-gray-800 mb-1">
+                Weekdays:{" "}
+                {tutor.availability?.generalAvailability?.weekdays?.start} -{" "}
+                {tutor.availability?.generalAvailability?.weekdays?.end}
+              </p>
+              <p className="font-medium text-gray-800">
+                Weekends:{" "}
+                {tutor.availability?.generalAvailability?.weekends?.start} -{" "}
+                {tutor.availability?.generalAvailability?.weekends?.end}
+              </p>
               {tutor.availability?.generalAvailability?.notes && (
-                <p className="text-sm text-gray-600 mt-2 italic">{tutor.availability.generalAvailability.notes}</p>
+                <p className="text-sm text-gray-600 mt-2 italic">
+                  {tutor.availability.generalAvailability.notes}
+                </p>
               )}
             </div>
           </div>
-          
+
           <div>
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">Available Slots</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">
+              Available Slots
+            </h3>
             {tutor.availability?.specificSlots?.length > 0 ? (
               <div className="space-y-4">
                 {tutor.availability.specificSlots.map((day, index) => (
-                  <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
+                  <div
+                    key={index}
+                    className="border-b pb-4 last:border-b-0 last:pb-0"
+                  >
                     <h4 className="font-medium text-gray-800 mb-2">
                       {day.day} {day.date && `(${day.date})`}
                     </h4>
                     <div className="grid grid-cols-2 gap-2">
                       {day.slots.map((slot, slotIndex) => (
-                        <div key={slotIndex} className="bg-blue-50 text-blue-700 px-3 py-2 rounded text-sm">
+                        <div
+                          key={slotIndex}
+                          className="bg-blue-50 text-blue-700 px-3 py-2 rounded text-sm"
+                        >
                           {formatTimeSlot(slot)}
                         </div>
                       ))}
@@ -248,30 +305,45 @@ const TutorProfile = () => {
             </span>
             Professional Experience
           </h2>
-          
+
           <ul className="space-y-4">
             {tutor.profile?.experience?.map((exp, index) => (
               <li key={index} className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
                   <div className="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center">
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                 </div>
                 <span className="ml-3 text-gray-700">{exp}</span>
               </li>
-            )) || <li className="text-gray-500">No experience information provided</li>}
+            )) || (
+              <li className="text-gray-500">
+                No experience information provided
+              </li>
+            )}
           </ul>
         </div>
       </div>
 
       {/* Booking CTA */}
       <div className="text-center">
-        <button className="relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+        <Link
+          to="/booking"
+          className="relative inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group overflow-hidden"
+        >
           <span className="relative z-10">Book Your Session Now</span>
           <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-        </button>
+        </Link>
       </div>
     </div>
   );

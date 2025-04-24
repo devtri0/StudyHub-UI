@@ -163,7 +163,7 @@ const TutorDash = () => {
             status: booking.status || "pending",
           })),
       };
-      
+
       setTutorData(transformedData);
       setLoading(false);
     } catch (err) {
@@ -213,7 +213,7 @@ const TutorDash = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
 
   const handleUpdateTutorData = (updatedData) => {

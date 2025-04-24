@@ -1,5 +1,5 @@
 import React from "react";
-import image1 from "../assets/images/About Us.jpg";
+import image1 from "../assets/images/overview.jpg";
 import { Link } from "react-router";
 
 const Overview = () => {
@@ -27,15 +27,15 @@ const Overview = () => {
           <ul className="text-gray-700 list-disc list-inside space-y-2 mb-6">
             <li>
               <span className="font-medium">Effortless Tutor Discovery:</span>{" "}
-              Access a wide range of qualified tutors for personalized learning.
+              Find qualified tutors who match your needs.
             </li>
             <li>
-              <span className="font-medium">Flexible Learning:</span> Choose
-              between in-person and online sessions that fit your schedule.
+              <span className="font-medium">Flexible Learning:</span> Learn
+              online or in-person when it works for you.
             </li>
             <li>
-              <span className="font-medium">Simple Booking System:</span> Easily
-              schedule, manage, and handle payments for your lessons.
+              <span className="font-medium">Simple Booking System:</span> Book
+              sessions and pay in one easy place.
             </li>
             <li>
               <span className="font-medium">Transparent Pricing:</span> Pay a

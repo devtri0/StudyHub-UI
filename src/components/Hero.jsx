@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../assets/images/Hero.jpg";
+import image from "../assets/images/hero-2.jpg";
 import { Link } from "react-router";
 
 const Hero = () => {
@@ -8,7 +8,7 @@ const Hero = () => {
       {/* Hero Section */}
       <main className="text-center px-4 max-w-6xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 font-serif">
-          Welcome to <br /> TutorConnect
+          Welcome to <br /> TutorKonnet
         </h1>
         <p className="text-gray-600 mb-6 max-w-xl mx-auto">
           Connecting students and tutors for personalized learning experiences
@@ -21,11 +21,11 @@ const Hero = () => {
               Join us now
             </button>
           </Link>
-          <Link to="/tutors">
-            <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-50">
+          {/* <Link to="/signup">
+            <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-400">
               Book a Tutor
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="flex justify-center pb-4 md:py-10">
