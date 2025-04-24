@@ -1,9 +1,37 @@
-import React from "react";
-import { User, Calendar, Clock, LogOut, X } from "lucide-react";
+import React, { useState } from "react";
+import {
+  User,
+  Calendar,
+  Clock,
+  LogOut,
+  X,
+  Menu,
+  Home,
+  Book,
+} from "lucide-react";
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ activeSection, setActiveSection }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeOnSelect = (section) => {
+    setActiveSection(section);
+    setIsOpen(false);
+  };
+
   return (
     <>
+      {/* Mobile Hamburger Button */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-40 bg-blue-600 text-white p-2 rounded-md shadow-md"
+        onClick={toggleSidebar}
+      >
+        <Menu size={24} />
+      </button>
+
       {/* Mobile Overlay */}
       {isOpen && (
         <div
@@ -14,59 +42,102 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:fixed top-0 left-0 h-screen bg-white shadow-md flex flex-col justify-between border-r border-gray-200 z-30 overflow-y-auto transition-all duration-300 ease-in-out
-                   ${
-                     isOpen ? "w-64 translate-x-0" : "w-64 -translate-x-full"
-                   } md:translate-x-0 md:w-64`}
+        className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-blue-600 to-blue-800 text-white shadow-lg flex flex-col z-30 transition-all duration-300 ease-in-out
+                  ${
+                    isOpen
+                      ? "w-64 translate-x-0"
+                      : "w-16 -translate-x-full md:translate-x-0"
+                  } md:w-64`}
       >
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-blue-600 font-serif">
-              Tutor Panel
-            </h1>
-            {/* Close button - only on mobile */}
-            <button
-              className="md:hidden text-gray-500 hover:text-gray-700"
-              onClick={toggleSidebar}
-            >
-              <X size={24} />
-            </button>
-          </div>
+        {/* Close Button - Mobile Only */}
+        <button
+          className="md:hidden absolute top-4 right-4 text-white hover:text-gray-200"
+          onClick={toggleSidebar}
+        >
+          <X size={20} />
+        </button>
 
-          <nav className="space-y-3">
-            <a
-              href="#profile"
-              className="flex items-center py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md px-2 transition-colors duration-200 font-serif"
-              onClick={() => toggleSidebar()}
-            >
-              <User className="w-5 h-5 mr-2" />
-              Profile
-            </a>
-            <a
-              href="#bookings"
-              className="flex items-center py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md px-2 transition-colors duration-200 font-serif"
-              onClick={() => toggleSidebar()}
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              Bookings
-            </a>
-            <a
-              href="#availability"
-              className="flex items-center py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md px-2 transition-colors duration-200 font-serif"
-              onClick={() => toggleSidebar()}
-            >
-              <Clock className="w-5 h-5 mr-2" />
-              Availability
-            </a>
-          </nav>
+        {/* Profile Section */}
+        <div className="flex flex-col items-center p-4 md:p-6 mb-6">
+          <div className="relative">
+            <img
+              src="/api/placeholder/80/80"
+              alt="Profile"
+              className="w-10 h-10 md:w-20 md:h-20 rounded-full object-cover border-2 border-white"
+            />
+          </div>
+          <h2 className="text-lg font-semibold mt-2 hidden md:block">
+            User Name
+          </h2>
+          <p className="text-xs text-blue-100 hidden md:block">
+            user@example.com
+          </p>
         </div>
-        <div className="p-4 border-t">
-          <button className="flex items-center text-blue-500 hover:text-blue-700 hover:underline font-serif transition-colors duration-200">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
+
+        {/* Navigation */}
+        <nav className="flex-1 space-y-2 px-2">
+          <button
+            onClick={() => closeOnSelect("dashboard")}
+            className={`w-full flex items-center px-3 py-3 rounded-lg transition-all
+                      ${
+                        activeSection === "dashboard"
+                          ? "bg-blue-700"
+                          : "hover:bg-blue-700"
+                      }`}
+          >
+            <Home className="text-lg" />
+            <span className="ml-3 hidden md:inline">Dashboard</span>
           </button>
-        </div>
+
+          <button
+            onClick={() => closeOnSelect("profile")}
+            className={`w-full flex items-center px-3 py-3 rounded-lg transition-all
+                      ${
+                        activeSection === "profile"
+                          ? "bg-blue-700"
+                          : "hover:bg-blue-700"
+                      }`}
+          >
+            <User className="text-lg" />
+            <span className="ml-3 hidden md:inline">Profile</span>
+          </button>
+
+          <button
+            onClick={() => closeOnSelect("availability")}
+            className={`w-full flex items-center px-3 py-3 rounded-lg transition-all
+                      ${
+                        activeSection === "availability"
+                          ? "bg-blue-700"
+                          : "hover:bg-blue-700"
+                      }`}
+          >
+            <Calendar className="text-lg" />
+            <span className="ml-3 hidden md:inline">Availability</span>
+          </button>
+
+          <button
+            onClick={() => closeOnSelect("teachingStyle")}
+            className={`w-full flex items-center px-3 py-3 rounded-lg transition-all
+                      ${
+                        activeSection === "teachingStyle"
+                          ? "bg-blue-700"
+                          : "hover:bg-blue-700"
+                      }`}
+          >
+            <Book className="text-lg" />
+            <span className="ml-3 hidden md:inline">Teaching Style</span>
+          </button>
+        </nav>
+
+        {/* Logout Button */}
+        <button className="w-full flex items-center px-3 py-3 md:mt-6 bg-red-500 hover:bg-red-600 transition-all">
+          <LogOut className="text-lg" />
+          <span className="ml-3 hidden md:inline">Logout</span>
+        </button>
       </aside>
+
+      {/* Content Spacer - For Fixed Sidebar */}
+      <div className="md:pl-64"></div>
     </>
   );
 };

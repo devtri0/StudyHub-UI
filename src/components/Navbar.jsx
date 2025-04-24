@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router"; // Fixed router import
 import { LogIn, MenuIcon, Newspaper, ChevronDown } from "lucide-react";
+import image from "../assets/images/Tutor-logo.png";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,12 +20,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center">
         {/* Logo Section */}
         <div className="flex-shrink-0 flex items-center space-x-2">
-          <div className="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center">
-            <span className="text-white text-2xl font-bold font-serif">T</span>
+          <div>
+            {/* <span className="text-white text-2xl font-bold font-serif">T</span> */}
           </div>
-          <span className="text-xl font-bold text-blue-700 font-serif">
+          {/* <span className="text-xl font-bold text-blue-700 font-serif">
             TutorConnect
-          </span>
+          </span> */}
+          <img src={image} alt="logo" className="rounded-lg w-40 h-auto" />
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -58,13 +60,13 @@ const Navbar = () => {
               {activeDropdown === "students" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
                   <Link
-                    to="/find-tutor"
+                    to="/signup"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Find Tutor
                   </Link>
                   <Link
-                    to="/contact-us"
+                    to="/"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Contact Us
@@ -85,19 +87,19 @@ const Navbar = () => {
               {activeDropdown === "levels" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
                   <Link
-                    to="/tutors"
+                    to="/signup"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     JHS
                   </Link>
                   <Link
-                    to="/tutors"
+                    to="/signup"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     S.H.S
                   </Link>
                   <Link
-                    to="/tutors"
+                    to="/signup"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Tertiary

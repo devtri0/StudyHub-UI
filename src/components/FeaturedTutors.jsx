@@ -1,8 +1,8 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
-import image1 from "../assets/images/T4.jpg";
-import image2 from "../assets/images/T2.jpg";
-import image3 from "../assets/images/T5.jpg";
+import image1 from "../assets/images/hero-1.jpg";
+import image2 from "../assets/images/G1.jpg";
+import image3 from "../assets/images/B2.jpg";
 
 const FeaturedTutors = () => {
   // Sample tutor data - in a real app, this would come from props or API
@@ -49,14 +49,14 @@ const FeaturedTutors = () => {
               key={tutor.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
-              <div className="h-56 overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={tutor.image}
                   alt={tutor.name}
-                  className="w-full h-full object-top object-cover"
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-6 flex-grow">
                 <h3 className="font-bold text-lg mb-1">{tutor.name}</h3>
                 <p className="text-gray-600 mb-1">Subject: {tutor.subject}</p>
                 <p className="text-gray-600 mb-4">
@@ -69,7 +69,7 @@ const FeaturedTutors = () => {
 
         <div className="text-center">
           <a
-            href="/tutors"
+            href="/signup"
             className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300"
           >
             Browse More

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import TutorCard from "../components/TutorCard";
 import TutorsGrid from "../components/TutorsGrid";
+import Pagination from "../components/Pagination";
 import axios from "axios";
 
 const Tutors = () => {
@@ -13,15 +14,21 @@ const Tutors = () => {
     availability: {
       morning: false,
       afternoon: false,
-      evening: false
-    }
+      evening: false,
+    },
   });
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tutorsPerPage] = useState(4); // Show 4 tutors per page
 
   useEffect(() => {
     const fetchTutors = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("https://studyhub-api-p0q4.onrender.com/tutors");
+        const response = await axios.get(
+          "https://studyhub-api-p0q4.onrender.com/tutors"
+        );
         setTutors(response.data.data);
       } catch (err) {
         setError(err.message || "Failed to fetch tutors");
@@ -35,16 +42,36 @@ const Tutors = () => {
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
+    setCurrentPage(1); // Reset to first page when filters change
   };
 
-  const filteredTutors = tutors.filter(tutor => {
+  const filteredTutors = tutors.filter((tutor) => {
     // Subject filter
-    if (filters.subject && !tutor.subjects?.some(sub => sub.name === filters.subject)) {
+    if (
+      filters.subject &&
+      !tutor.subjects?.some((sub) => sub.name === filters.subject)
+    ) {
       return false;
     }
-    
+
     return true;
   });
+
+  // Get current tutors for pagination
+  const indexOfLastTutor = currentPage * tutorsPerPage;
+  const indexOfFirstTutor = indexOfLastTutor - tutorsPerPage;
+  const currentTutors = filteredTutors.slice(
+    indexOfFirstTutor,
+    indexOfLastTutor
+  );
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () =>
+    setCurrentPage((prev) =>
+      Math.min(prev + 1, Math.ceil(filteredTutors.length / tutorsPerPage))
+    );
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   if (loading) {
     return (
@@ -60,8 +87,17 @@ const Tutors = () => {
         <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              <svg
+                className="h-5 w-5 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
             <div className="ml-3">
@@ -83,11 +119,16 @@ const Tutors = () => {
 
   return (
     <div>
-      <TutorCard 
-        onFilterChange={handleFilterChange}
-        currentFilters={filters}
+      <TutorCard onFilterChange={handleFilterChange} currentFilters={filters} />
+      <TutorsGrid tutors={currentTutors} />
+      <Pagination
+        tutorsPerPage={tutorsPerPage}
+        totalTutors={filteredTutors.length}
+        paginate={paginate}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        currentPage={currentPage}
       />
-      <TutorsGrid tutors={filteredTutors} />
     </div>
   );
 };

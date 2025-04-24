@@ -1,5 +1,5 @@
 import React from "react";
-import image2 from "../assets/images/Get started.jpg";
+import image2 from "../assets/images/get started.jpg";
 
 const GetStarted = () => {
   return (
