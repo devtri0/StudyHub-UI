@@ -6,14 +6,27 @@ const TutorCard = ({ onFilterChange, currentFilters }) => {
   const [availability, setAvailability] = useState(currentFilters.availability);
 
   const subjects = [
+    "Mathematics",
     "English",
-    "Maths",
+    "Science",
+    "Social Studies",
+    "ICT",
+    "Integrated Science",
     "Physics",
-    "Economics",
     "Chemistry",
-    "French",
     "Biology",
-    "Computer Science"
+    "Economics",
+    "Accounting",
+    "Business",
+    "Geography",
+    "History",
+    "Government",
+    "French",
+    "Ga",
+    "Twi",
+    "Ewe",
+    "Fante",
+    "Other",
   ];
 
   const handleSubjectChange = (subject) => {

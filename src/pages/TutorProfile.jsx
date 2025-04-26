@@ -338,7 +338,7 @@ const TutorProfile = () => {
       {/* Booking CTA */}
       <div className="text-center">
         <Link
-          to="/booking"
+          to="/login"
           className="relative inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group overflow-hidden"
         >
           <span className="relative z-10">Book Your Session Now</span>

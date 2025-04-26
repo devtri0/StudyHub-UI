@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,60 +18,46 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("https://studyhub-api-p0q4.onrender.com/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post(
+        "https://studyhub-api-p0q4.onrender.com/login",
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+          timeout: 10000
+        }
+      );
 
-      const data = await res.json();
-      setLoading(false);
-
-      if (!res.ok) {
-        setError(data.message || "Login failed. Try again.");
-        return;
-      }
-
-      const { token, user } = data;
+      const { token, user } = response.data;
 
       if (!token || !user) {
-        throw new Error("Missing token or user information from server");
+        throw new Error("Authentication data missing from server response");
       }
 
-      // Store token for API usage
+      // Normalize user data to ensure consistent structure
+      const normalizedUser = {
+        ...user,
+        _id: user._id || user.id, // Standardize on _id
+        role: user.role || "student" // Default role if not provided
+      };
+
+      // Store authentication data
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(normalizedUser));
 
-      // Tutor redirection logic
-      if (user.role === "tutor") {
-        const tutorId = user.id || user._id;
-
-        if (!tutorId) throw new Error("Tutor ID is missing");
-
-        localStorage.setItem("tutorId", tutorId);
-
-        
-        const isDefaultAvatar = user.photo?.includes("ui-avatars.com");
-
-        if (isDefaultAvatar) {
-          navigate("/tutor/profile"); 
-        } else {
-          navigate("/tutordash"); 
-        }
+      // Handle redirection based on role
+      if (normalizedUser.role === "tutor") {
+        localStorage.setItem("tutorId", normalizedUser._id);
+        navigate(user.photo?.includes("ui-avatars.com") ? "/tutor/profile" : "/tutordash");
       } else {
-        // For regular users
-        navigate("/tutors");
+        navigate("/studentdash");
       }
 
     } catch (err) {
       console.error("Login error:", err);
-      setError(err.message || "Network error. Please try again later.");
+      setError(err.response?.data?.message || err.message || "Login failed. Please try again.");
+      localStorage.clear();
+    } finally {
       setLoading(false);
-
-      // Cleanup
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("tutorId");
     }
   };
 
@@ -78,10 +65,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 shadow-lg rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-gray-700 mb-4">Login</h2>
-        <p className="text-sm text-gray-500 text-center mb-6">
-          Enter your credentials to access your account.
-        </p>
-
+        
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block font-semibold text-gray-700">Email</label>
@@ -90,9 +74,8 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
               required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
             />
           </div>
 
@@ -103,9 +86,8 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
               required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
             />
           </div>
 
@@ -114,14 +96,19 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600 transition disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <span className="flex items-center justify-center">
+                <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>
+                Logging in...
+              </span>
+            ) : "Login"}
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-500 mt-4">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <a href="/signup" className="text-blue-600 font-semibold hover:underline">
             Sign Up
           </a>
