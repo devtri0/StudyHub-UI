@@ -10,6 +10,8 @@ import TutorDash from "./pages/TutorDash";
 import DashLayout from "./layouts/DashLayout";
 import ProfileManagement from "./components/ProfileManagement";
 import BookingForm from "./components/BookingForm";
+import VerifyEmail from "./components/EmailVerification";
+import StudentDashboard from "./pages/StudentDashboard";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/tutordash" element={<TutorDash />} />
           <Route path="/tutor/profile" element={<ProfileManagement />} />
           <Route path="/booking" element={<BookingForm />} />
+          <Route path="/verify-email" element={<VerifyEmail/>} />
+          <Route path="/studentdash" element={<StudentDashboard/>} />
         </Route>
       </Routes>
     </BrowserRouter>

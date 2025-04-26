@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router"; // Fixed router import
+import { Link } from "react-router";
 import { LogIn, MenuIcon, Newspaper, ChevronDown } from "lucide-react";
 import image from "../assets/images/Tutor-logo.png";
 
@@ -19,15 +19,15 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 z-50 w-full shadow-sm bg-white px-4 md:px-6 py-3">
       <div className="max-w-7xl mx-auto flex items-center">
         {/* Logo Section */}
-        <div className="flex-shrink-0 flex items-center space-x-2">
+        <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
           <div>
             {/* <span className="text-white text-2xl font-bold font-serif">T</span> */}
           </div>
           {/* <span className="text-xl font-bold text-blue-700 font-serif">
-            TutorConnect
-          </span> */}
+    TutorConnect
+  </span> */}
           <img src={image} alt="logo" className="rounded-lg w-40 h-auto" />
-        </div>
+        </Link>
 
         {/* Mobile Menu Toggle */}
         <div className="md:hidden ml-auto">

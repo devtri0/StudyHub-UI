@@ -158,7 +158,7 @@ const TutorDash = () => {
             id: booking.id,
             student: booking.student?.name || "Anonymous Student",
             date: new Date(booking.date).toLocaleDateString(),
-            time: `${booking.startTime} - ${booking.endTime}`,
+            time: `${booking.time}`,
             subject: booking.subject || "No subject specified",
             status: booking.status || "pending",
           })),
@@ -186,28 +186,93 @@ const TutorDash = () => {
     fetchTutorData();
   }, [tutorId, token, navigate]);
 
-  const handleBookingAction = async (id, action) => {
+  const handleBookingAction = async (bookingId, action) => {
     try {
+      // 1. Authentication check
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Authentication required. Please login.");
+
+      // 2. Validate action type
+      const validActions = ["confirmed", "rejected", "cancelled", "completed"];
+      if (!validActions.includes(action)) {
+        throw new Error(`Invalid action. Allowed: ${validActions.join(", ")}`);
+      }
+
+      // 3. Prepare request body according to schema
+      const requestBody = { status: action };
+
+      // 4. Handle meeting link for confirmed status
+      if (action === "confirmed") {
+        let meetingLink;
+        let attempts = 0;
+        const maxAttempts = 3;
+
+        while (attempts < maxAttempts) {
+          meetingLink = window.prompt(
+            attempts === 0
+              ? "Please enter the meeting link (must be a valid URL starting with http/https):"
+              : "Invalid URL. Please enter a valid meeting link starting with http/https:"
+          );
+
+          if (meetingLink === null) {
+            throw new Error("Meeting link entry cancelled");
+          }
+
+          if (
+            meetingLink &&
+            (meetingLink.startsWith("http://") ||
+              meetingLink.startsWith("https://"))
+          ) {
+            requestBody.meetingLink = meetingLink;
+            break;
+          }
+
+          attempts++;
+          if (attempts === maxAttempts) {
+            throw new Error(
+              "Maximum attempts reached. Please try again later."
+            );
+          }
+        }
+      }
+
+      // 5. Make API request
       const response = await fetch(
-        `https://studyhub-api-p0q4.onrender.com/manage/${id}`,
+        `https://studyhub-api-p0q4.onrender.com/manage/${bookingId}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status: action }),
+          body: JSON.stringify(requestBody),
         }
       );
 
-      if (!response.ok) throw new Error("Failed to update booking");
+      // 6. Handle response
+      const responseData = await response.json();
 
-      // Refresh bookings after update
-      await fetchTutorData();
-      toast.success(`Booking ${action} successfully!`);
-    } catch (err) {
-      console.error("Error updating booking:", err);
-      toast.error(`Failed to ${action} booking`);
+      if (!response.ok) {
+        const errorMessage =
+          responseData.message ||
+          responseData.error?.details?.[0]?.message ||
+          `Failed to ${action} booking`;
+        throw new Error(errorMessage);
+      }
+
+      // 7. Return success response
+      return {
+        success: true,
+        message: responseData.message || `Booking ${action} successfully`,
+        booking: responseData.data,
+      };
+    } catch (error) {
+      console.error(`Booking ${action} error:`, error);
+      return {
+        success: false,
+        message: error.message,
+        error: error,
+      };
     }
   };
 
@@ -513,76 +578,81 @@ const TutorDash = () => {
               </div>
             </section>
 
-            {/* Bookings */}
-            <section className="bg-white rounded-lg shadow p-4 md:p-6 mb-6">
-              <h3 className="text-lg font-semibold text-blue-600 mb-4 flex items-center">
-                <FiBookmark className="mr-2" /> Upcoming Bookings
-              </h3>
-              <div className="space-y-4">
-                {tutorData.bookings.length > 0 ? (
-                  tutorData.bookings.map((b) => (
-                    <div
-                      key={b.id}
-                      className={`border p-4 rounded-lg shadow-sm ${
-                        b.status === "confirmed" ? "bg-blue-50" : "bg-gray-50"
-                      }`}
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
-                        <p>
-                          <strong>Student:</strong> {b.student}
-                        </p>
-                        <p>
-                          <strong>Date:</strong> {b.date}
-                        </p>
-                        <p>
-                          <strong>Time:</strong> {b.time}
-                        </p>
-                        <p>
-                          <strong>Subject:</strong> {b.subject}
-                        </p>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span
-                          className={`px-2 py-1 text-xs rounded-full ${
-                            b.status === "confirmed"
-                              ? "bg-green-100 text-green-800"
-                              : b.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
+            {activeSection === "dashboard" && (
+              <section className="bg-white rounded-lg shadow p-4 md:p-6 mb-6">
+                <h3 className="text-lg font-semibold text-blue-600 mb-4 flex items-center">
+                  <FiBookmark className="mr-2" /> Upcoming Bookings
+                </h3>
+
+                <div className="space-y-4">
+                  {tutorData.bookings.length > 0 ? (
+                    tutorData.bookings.map((booking) => {
+                      return (
+                        <div
+                          key={booking.id}
+                          className="border p-4 rounded-lg bg-gray-50"
                         >
-                          {b.status}
-                        </span>
-                        <div className="space-x-2">
-                          {b.status === "pending" && (
-                            <>
-                              <button
-                                onClick={() =>
-                                  handleBookingAction(b.id, "confirmed")
-                                }
-                                className="px-3 py-1 text-xs md:text-sm text-white bg-green-600 rounded hover:bg-green-700"
+                          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
+                            <div>
+                              <p>
+                                <strong>Student:</strong>{" "}
+                                {booking.student || "Unknown"}
+                              </p>
+                              <p>
+                                <strong>Date:</strong> {booking.date}
+                              </p>
+                            </div>
+                            <div>
+                              <p>
+                                <strong>Time:</strong> {booking.time}
+                              </p>
+                              <p>
+                                <strong>Subject:</strong> {booking.subject}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs ${
+                                  booking.status === "confirmed"
+                                    ? "bg-green-100 text-green-800"
+                                    : booking.status === "pending"
+                                    ? "bg-yellow-100 text-yellow-800"
+                                    : "bg-red-100 text-red-800"
+                                }`}
                               >
-                                Confirm
-                              </button>
-                              <button
-                                onClick={() =>
-                                  handleBookingAction(b.id, "cancelled")
-                                }
-                                className="px-3 py-1 text-xs md:text-sm text-white bg-red-600 rounded hover:bg-red-700"
-                              >
-                                Cancel
-                              </button>
-                            </>
-                          )}
+                                {booking.status}
+                              </span>
+
+                              {/* FORCE SHOW BUTTONS FOR TESTING */}
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() =>
+                                    handleBookingAction(booking.id, "confirmed")
+                                  }
+                                  className="px-3 py-1 bg-green-600 text-white rounded text-sm"
+                                >
+                                  Confirm
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleBookingAction(booking.id, "rejected")
+                                  }
+                                  className="px-3 py-1 bg-red-600 text-white rounded text-sm"
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-500">No upcoming bookings</p>
-                )}
-              </div>
-            </section>
+                      );
+                    })
+                  ) : (
+                    <p className="text-gray-500">No upcoming bookings</p>
+                  )}
+                </div>
+              </section>
+            )}
           </>
         )}
 
