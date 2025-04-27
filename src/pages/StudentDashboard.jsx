@@ -56,7 +56,6 @@ const handleOpenBooking = (tutor) => {
       onClose={(success) => {
         setShowBookingModal(false);
         if (success) {
-          // Optionally refresh bookings list
           fetchBookings();
         }
       }}
@@ -81,7 +80,7 @@ const handleOpenBooking = (tutor) => {
         }
       );
 
-      // Directly access the response data (no .data.data)
+      // Directly access the response data 
       const userData = response.data;
 
       if (!userData) {
@@ -240,7 +239,7 @@ const handleOpenBooking = (tutor) => {
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   // Handle tutor profile view
