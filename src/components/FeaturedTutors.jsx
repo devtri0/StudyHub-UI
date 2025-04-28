@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 
@@ -109,14 +110,14 @@ const FeaturedTutors = () => {
         </div>
 
         <div className="text-center">
-          <a
-            href="/tutors"
-            className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300"
-          >
-            Browse More
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
-        </div>
+  <Link
+    to="/tutors"
+    className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-300"
+  >
+    Browse More
+    <ArrowRight className="ml-2 h-4 w-4" />
+  </Link>
+</div>
       </div>
     </section>
   );
