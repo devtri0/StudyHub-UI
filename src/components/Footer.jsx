@@ -29,7 +29,7 @@ const Footer = () => {
               </span>
             </div>
             <h1 className="ml-2 text-2xl font-bold font-serif text-blue-700">
-              TutorConnect
+              TutorKonnet
             </h1>
           </div>
 
@@ -66,7 +66,7 @@ const Footer = () => {
               href="#"
               className="text-gray-600 hover:text-blue-600 mb-2 text-sm"
             >
-              tutorconnect@gmail.com
+              tutorkonnet@gmail.com
             </a>
             <a
               href="#"
@@ -159,7 +159,7 @@ const Footer = () => {
 
         <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center">
           <div className="text-sm text-blue-500 mb-4 sm:mb-0">
-            © 2025 TutorConnect
+            © 2025 TutorKonnet
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
             <div className="flex gap-4 text-blue-500 text-sm">
