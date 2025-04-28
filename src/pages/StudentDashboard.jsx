@@ -240,7 +240,7 @@ const handleOpenBooking = (tutor) => {
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   // Handle tutor profile view
