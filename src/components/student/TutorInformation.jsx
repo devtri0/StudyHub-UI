@@ -42,9 +42,13 @@ const TutorInformation = ({ tutor: initialTutor }) => {
             }
           );
           
-          console.log( response.data); // Debug log
+          console.log("API response:", response.data); // Debug log
+          const data = response.data?.data || response.data;
+          if (!data) {
+            throw new Error("No tutor data received");
+          }
           
-          setTutor(response.data);
+          setTutor(data);
         } catch (err) {
           console.error("Fetch error:", err);
           setError(err.response?.data?.message || 
@@ -117,43 +121,72 @@ const TutorInformation = ({ tutor: initialTutor }) => {
     );
   }
 
-  // Directly access all fields from the tutor object
-  const {
-    _id,
-    firstName = "",
-    lastName = "",
-    email = "",
-    phone = "",
-    photo = "https://via.placeholder.com/200",
-    isVerified = false,
-    createdAt = "",
-    // Flat structure fields
-    specialization = [],
-    languages = [],
-    education = [],
-    experience = [],
-    location = {},
-    bio = "Nobiography available",
-    ratingsAverage = 0,
-    ratingsQuantity = 0,
-    generalAvailability = {
+  // Handle both nested and flattened data structures
+  const firstName = tutor?.firstName || "";
+  const lastName = tutor?.lastName || "";
+  const email = tutor?.email || "";
+  const phone = tutor?.phone || "Not provided";
+  const photo = tutor?.photo || "https://via.placeholder.com/200";
+  const isVerified = tutor?.isVerified || false;
+  const createdAt = tutor?.createdAt || "";
+  
+  // Check for nested profile or use flattened structure
+  const profile = tutor?.profile || {
+    specialization: tutor?.specialization || [],
+    languages: tutor?.languages || [],
+    education: tutor?.education || [],
+    experience: tutor?.experience || [],
+    location: tutor?.location || {},
+    bio: tutor?.bio || "No biography available",
+    ratingsAverage: tutor?.ratingsAverage || 0,
+    ratingsQuantity: tutor?.ratingsQuantity || 0
+  };
+
+  // Check for nested availability or use flattened structure
+  const availability = tutor?.availability || {
+    generalAvailability: tutor?.generalAvailability || {
       weekdays: {},
       weekends: {},
       notes: ""
     },
-    specificSlots = [],
-    teachingStyle = "Not specified",
-    subjects = []
-  } = tutor;
+    specificSlots: tutor?.specificSlots || []
+  };
 
-  // Filter out test data
-  const filteredSpecialization = filterTestData(specialization);
-  const filteredLanguages = filterTestData(languages);
-  const filteredEducation = filterTestData(education);
-  const filteredExperience = filterTestData(experience);
+  // Check for nested style or use flattened structure
+  const style = tutor?.style || {
+    teachingStyle: tutor?.teachingStyle || "Not specified",
+    subjects: tutor?.subjects || []
+  };
 
+  // Extract the filtered data
+  const specialization = filterTestData(profile?.specialization) || [];
+  const languages = filterTestData(profile?.languages) || [];
+  const education = filterTestData(profile?.education) || [];
+  const experience = filterTestData(profile?.experience) || [];
+  const location = profile?.location || {};
+  const bio = profile?.bio || "No biography available";
+  const ratingsAverage = profile?.ratingsAverage || 0;
+  const ratingsQuantity = profile?.ratingsQuantity || 0;
+
+  const generalAvailability = availability?.generalAvailability || {
+    weekdays: {},
+    weekends: {},
+    notes: ""
+  };
+  const specificSlots = availability?.specificSlots || [];
+
+  const teachingStyle = style?.teachingStyle || "Not specified";
+  const subjects = style?.subjects || [];
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
+      {/* Debug info - remove in production */}
+      {/* <div className="bg-yellow-50 p-4 mb-4 rounded-lg">
+        <h3 className="font-bold text-yellow-800 mb-2">Debug Information</h3>
+        <pre className="text-xs overflow-x-auto">
+          {JSON.stringify(tutor, null, 2)}
+        </pre>
+      </div> */}
+
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row gap-8 mb-8 bg-white rounded-xl shadow-sm p-6">
         <div className="flex-shrink-0 flex justify-center">
@@ -181,7 +214,7 @@ const TutorInformation = ({ tutor: initialTutor }) => {
             {firstName} {lastName}
           </h1>
           <p className="text-blue-600 font-medium mb-3">
-            {filteredSpecialization.join(", ") || "No specialization"}
+            {specialization.join(", ") || "No specialization"}
           </p>
           
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
@@ -191,7 +224,7 @@ const TutorInformation = ({ tutor: initialTutor }) => {
             </div>
             <div className="flex items-center text-gray-700">
               <FiPhone className="mr-2 text-blue-500" />
-              <span>{phone || "Not provided"}</span>
+              <span>{phone}</span>
             </div>
             <div className="flex items-center text-gray-700">
               <FiMapPin className="mr-2 text-blue-500" />
@@ -209,7 +242,7 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               <FiUser className="mr-1" />
               Member since {new Date(createdAt).toLocaleDateString()}
             </span>
-            {filteredLanguages.map((lang, i) => (
+            {languages.map((lang, i) => (
               <span key={i} className="bg-gray-100 px-3 py-1 rounded-full text-sm">
                 {lang}
               </span>
@@ -279,8 +312,8 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               Experience
             </h2>
             <ul className="space-y-3">
-              {filteredExperience.length > 0 ? (
-                filteredExperience.map((item, index) => (
+              {experience.length > 0 ? (
+                experience.map((item, index) => (
                   <li key={index} className="flex items-start">
                     <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
                     <span className="text-gray-700">{item}</span>
@@ -299,8 +332,8 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               Education
             </h2>
             <ul className="space-y-3">
-              {filteredEducation.length > 0 ? (
-                filteredEducation.map((item, index) => (
+              {education.length > 0 ? (
+                education.map((item, index) => (
                   <li key={index} className="flex items-start">
                     <FiCheckCircle className="text-green-500 mt-1 mr-2 flex-shrink-0" />
                     <span className="text-gray-700">{item}</span>
@@ -391,7 +424,7 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               <div className="space-y-3">
                 <p><span className="font-medium">Full Name:</span> {firstName} {lastName}</p>
                 <p><span className="font-medium">Email:</span> {email}</p>
-                <p><span className="font-medium">Phone:</span> {phone || "Not provided"}</p>
+                <p><span className="font-medium">Phone:</span> {phone}</p>
                 <p><span className="font-medium">Verified:</span> {isVerified ? 'Yes' : 'No'}</p>
                 <p><span className="font-medium">Member Since:</span> {new Date(createdAt).toLocaleDateString()}</p>
               </div>
@@ -422,8 +455,8 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               <div className="space-y-3">
                 <p><span className="font-medium">Bio:</span> {bio}</p>
                 <p><span className="font-medium">Rating:</span> {ratingsAverage.toFixed(1)} ({ratingsQuantity} reviews)</p>
-                <p><span className="font-medium">Specialization:</span> {filteredSpecialization.join(', ') || 'None'}</p>
-                <p><span className="font-medium">Languages:</span> {filteredLanguages.join(', ') || 'None'}</p>
+                <p><span className="font-medium">Specialization:</span> {specialization.join(', ') || 'None'}</p>
+                <p><span className="font-medium">Languages:</span> {languages.join(', ') || 'None'}</p>
               </div>
             </div>
 
@@ -433,8 +466,8 @@ const TutorInformation = ({ tutor: initialTutor }) => {
               <div className="space-y-3">
                 <p><span className="font-medium">Education:</span></p>
                 <ul className="list-disc pl-5">
-                  {filteredEducation.length > 0 ? (
-                    filteredEducation.map((item, index) => (
+                  {education.length > 0 ? (
+                    education.map((item, index) => (
                       <li key={index} className="text-gray-700">{item}</li>
                     ))
                   ) : (
@@ -443,8 +476,8 @@ const TutorInformation = ({ tutor: initialTutor }) => {
                 </ul>
                 <p><span className="font-medium">Experience:</span></p>
                 <ul className="list-disc pl-5">
-                  {filteredExperience.length > 0 ? (
-                    filteredExperience.map((item, index) => (
+                  {experience.length > 0 ? (
+                    experience.map((item, index) => (
                       <li key={index} className="text-gray-700">{item}</li>
                     ))
                   ) : (

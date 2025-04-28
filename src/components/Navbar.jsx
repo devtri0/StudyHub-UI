@@ -1,58 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LogIn, MenuIcon, Newspaper, ChevronDown, Loader2 } from "lucide-react";
+import { Link } from "react-router";
+import { LogIn, MenuIcon, Newspaper, ChevronDown } from "lucide-react";
 import image from "../assets/images/Tutor-logo.png";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [loadingLevel, setLoadingLevel] = useState(null);
-  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-    setActiveDropdown(null);
   };
 
   const toggleDropdown = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
-
-  const handleLevelFilter = async (level) => {
-    setLoadingLevel(level);
-    try {
-      const response = await axios.get(
-        `https://studyhub-api-p0q4.onrender.com/tutors/search?level=${level}`
-      );
-
-      if (!response.data.success) {
-        throw new Error(response.data.message || "Failed to fetch tutors");
-      }
-
-      if (response.data.tutors.length === 0) {
-        toast.info(`No tutors found for ${level} level`);
-        navigate("/tutors");
-        return;
-      }
-
-      navigate("/tutors", {
-        state: {
-          tutors: response.data.tutors,
-          filterLevel: level,
-          count: response.data.count
-        }
-      });
-
-    } catch (error) {
-      console.error("Error filtering tutors:", error);
-      toast.error(error.response?.data?.message || error.message || "Failed to filter tutors");
-    } finally {
-      setLoadingLevel(null);
-      setMobileMenuOpen(false);
-      setActiveDropdown(null);
-    }
   };
 
   return (
@@ -60,21 +20,23 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center">
         {/* Logo Section */}
         <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
+          <div>
+            {/* <span className="text-white text-2xl font-bold font-serif">T</span> */}
+          </div>
+          {/* <span className="text-xl font-bold text-blue-700 font-serif">
+    TutorConnect
+  </span> */}
           <img src={image} alt="logo" className="rounded-lg w-40 h-auto" />
         </Link>
 
         {/* Mobile Menu Toggle */}
         <div className="md:hidden ml-auto">
-          <button 
-            onClick={toggleMobileMenu} 
-            className="cursor-pointer"
-            aria-label="Toggle menu"
-          >
+          <button onClick={toggleMobileMenu} className="cursor-pointer">
             <MenuIcon size={24} className="text-gray-700" />
           </button>
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Nav Links - Hidden on mobile, shown on tablet/desktop */}
         <div className="hidden md:flex flex-1 items-center justify-center">
           <ul className="flex space-x-6 text-gray-600 font-medium">
             <li>
@@ -104,7 +66,7 @@ const Navbar = () => {
                     Find Tutor
                   </Link>
                   <Link
-                    to="/contact"
+                    to="/"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Contact Us
@@ -116,45 +78,32 @@ const Navbar = () => {
             {/* Level of Study Dropdown */}
             <li className="relative">
               <button
-                className="flex items-center hover:text-blue-600 min-w-[120px]"
+                className="flex items-center hover:text-blue-600"
                 onClick={() => toggleDropdown("levels")}
-                disabled={!!loadingLevel}
               >
                 Levels Of Study
                 <ChevronDown size={16} className="ml-1" />
-                {loadingLevel && activeDropdown === "levels" && (
-                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                )}
               </button>
-              {activeDropdown === "levels" && !loadingLevel && (
+              {activeDropdown === "levels" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
-                  <button
-                    onClick={() => handleLevelFilter("JHS")}
-                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center"
+                  <Link
+                    to="/signup"
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     JHS
-                    {loadingLevel === "JHS" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleLevelFilter("SHS")}
-                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center"
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     S.H.S
-                    {loadingLevel === "SHS" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleLevelFilter("Tertiary")}
-                    className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center"
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Tertiary
-                    {loadingLevel === "Tertiary" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
+                  </Link>
                 </div>
               )}
             </li>
@@ -202,7 +151,7 @@ const Navbar = () => {
             className="flex items-center gap-1 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-700 transition"
           >
             <LogIn size={16} />
-            Login
+            Login In
           </Link>
         </div>
       </div>
@@ -212,11 +161,7 @@ const Navbar = () => {
         <div className="md:hidden absolute left-0 right-0 bg-white mt-3 shadow-lg z-50 border-t border-gray-200">
           <ul className="py-2 px-4">
             <li className="mb-2">
-              <Link 
-                to="/" 
-                className="text-blue-600 font-medium block py-2"
-                onClick={toggleMobileMenu}
-              >
+              <Link to="/" className="text-blue-600 font-medium block py-2">
                 Home
               </Link>
             </li>
@@ -233,16 +178,14 @@ const Navbar = () => {
               {activeDropdown === "mobile-students" && (
                 <div className="pl-4 mt-1">
                   <Link
-                    to="/signup"
+                    to="/find-tutor"
                     className="block py-2 text-gray-600 hover:text-blue-600"
-                    onClick={toggleMobileMenu}
                   >
                     Find Tutor
                   </Link>
                   <Link
-                    to="/contact"
+                    to="/contact-us"
                     className="block py-2 text-gray-600 hover:text-blue-600"
-                    onClick={toggleMobileMenu}
                   >
                     Contact Us
                   </Link>
@@ -255,48 +198,34 @@ const Navbar = () => {
               <button
                 className="flex items-center justify-between w-full text-gray-600 py-2"
                 onClick={() => toggleDropdown("mobile-levels")}
-                disabled={!!loadingLevel}
               >
                 Levels Of Study
                 <ChevronDown size={16} />
-                {loadingLevel && activeDropdown === "mobile-levels" && (
-                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                )}
               </button>
-              {activeDropdown === "mobile-levels" && !loadingLevel && (
+              {activeDropdown === "mobile-levels" && (
                 <div className="pl-4 mt-1">
-                  <button
-                    onClick={() => handleLevelFilter("JHS")}
-                    className="w-full text-left block py-2 text-gray-600 hover:text-blue-600 flex items-center"
+                  <Link
+                    to="/levels/jhs"
+                    className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     JHS
-                    {loadingLevel === "JHS" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleLevelFilter("SHS")}
-                    className="w-full text-left block py-2 text-gray-600 hover:text-blue-600 flex items-center"
+                  </Link>
+                  <Link
+                    to="/levels/shs"
+                    className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     S.H.S
-                    {loadingLevel === "SHS" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleLevelFilter("Tertiary")}
-                    className="w-full text-left block py-2 text-gray-600 hover:text-blue-600 flex items-center"
+                  </Link>
+                  <Link
+                    to="/levels/tertiary"
+                    className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     Tertiary
-                    {loadingLevel === "Tertiary" && (
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    )}
-                  </button>
+                  </Link>
                 </div>
               )}
             </li>
 
-            {/* Mobile Tutors Dropdown */}
             <li className="mb-2">
               <button
                 className="flex items-center justify-between w-full text-gray-600 py-2"
@@ -310,28 +239,23 @@ const Navbar = () => {
                   <Link
                     to="/tutors"
                     className="block py-2 text-gray-600 hover:text-blue-600"
-                    onClick={toggleMobileMenu}
                   >
                     Tutor List
                   </Link>
                   <Link
                     to="/tutordash"
                     className="block py-2 text-gray-600 hover:text-blue-600"
-                    onClick={toggleMobileMenu}
                   >
                     Dashboard
                   </Link>
                 </div>
               )}
             </li>
-
-            {/* Mobile Auth Buttons */}
             <li className="pt-2 border-t border-gray-200">
               <div className="flex flex-col space-y-2 my-2">
                 <Link
                   to="/signup"
                   className="flex items-center justify-center gap-1 border border-blue-600 text-blue-600 px-4 py-2 rounded-full text-sm font-medium"
-                  onClick={toggleMobileMenu}
                 >
                   <Newspaper size={16} />
                   Sign Up
@@ -339,10 +263,9 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   className="flex items-center justify-center gap-1 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium"
-                  onClick={toggleMobileMenu}
                 >
                   <LogIn size={16} />
-                  Login
+                  Login In
                 </Link>
               </div>
             </li>
