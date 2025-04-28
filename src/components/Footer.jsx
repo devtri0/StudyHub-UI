@@ -1,7 +1,14 @@
 import React from "react";
-import { Twitter, Linkedin, Youtube, Mail } from "lucide-react";
+import { Twitter, Linkedin, Youtube, Mail, ArrowUp } from "lucide-react";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="flex flex-col bg-gray-50">
       <div className="max-w-6xl w-full mx-auto px-4 md:px-8 flex flex-col">
@@ -43,7 +50,8 @@ const Footer = () => {
         </div>
 
         {/* Navigation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-10">
+          {/* Contact */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Contact</h3>
             <a
@@ -60,6 +68,7 @@ const Footer = () => {
             </a>
           </div>
 
+          {/* About */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">About</h3>
             <a
@@ -82,6 +91,7 @@ const Footer = () => {
             </a>
           </div>
 
+          {/* Students */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Students</h3>
             <a
@@ -104,6 +114,7 @@ const Footer = () => {
             </a>
           </div>
 
+          {/* Tutors */}
           <div className="flex flex-col">
             <h3 className="font-medium text-base mb-3 font-serif">Tutors</h3>
             <a
@@ -125,11 +136,19 @@ const Footer = () => {
               Tutor Rates
             </a>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Footer */}
-      <div className="w-full border-t border-gray-200 bg-gray-50 py-4">
+          {/* Back to Top Button Column */}
+          <div className="flex items-start justify-end">
+            <button
+              onClick={scrollToTop}
+              className="bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition-colors focus:outline-none"
+              aria-label="Back to top"
+            >
+              <ArrowUp size={20} />
+            </button>
+          </div>
+        </div>
+
         <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center">
           <div className="text-sm text-blue-500 mb-4 sm:mb-0">
             © 2025 TutorConnect
@@ -143,7 +162,7 @@ const Footer = () => {
                 Terms
               </a>
             </div>
-            <div className="flex space-x-3">
+            <div className="flex items-center space-x-3">
               <a href="#" className="hover:text-blue-600">
                 <Twitter size={18} />
               </a>

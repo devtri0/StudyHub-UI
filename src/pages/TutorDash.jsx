@@ -322,7 +322,7 @@ const TutorDash = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-4 md:p-6 sticky top-0 h-fit md:h-screen shadow-lg z-10">
+      <aside className="w-full md:w-64 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-4 md:p-6 sticky top-0 h-fit md:h-screen shadow-lg z-10 flex flex-col">
         <div className="flex flex-col items-center mb-6 relative">
           <div className="relative">
             <img
@@ -417,15 +417,17 @@ const TutorDash = () => {
             <FiBook className="mr-3 text-lg" />
             <span>Teaching Style</span>
           </button>
-
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center px-3 py-3 rounded-lg mt-6 bg-red-500 hover:bg-red-600 transition-all"
-          >
-            <FiLogOut className="mr-3 text-lg" />
-            <span>Logout</span>
-          </button>
         </nav>
+
+        {/* Logout button moved to the bottom with flex-grow pushing it down */}
+        <div className="flex-grow"></div>
+        <button
+          onClick={handleLogout}
+          className="flex items-center px-3 py-3 mt-auto text-white hover:text-red-300 transition-all"
+        >
+          <FiLogOut className="mr-3 text-lg" />
+          <span>Logout</span>
+        </button>
       </aside>
 
       {/* Main Content */}
