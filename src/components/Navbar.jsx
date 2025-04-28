@@ -87,19 +87,19 @@ const Navbar = () => {
               {activeDropdown === "levels" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
                   <Link
-                    to="/signup"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     JHS
                   </Link>
                   <Link
-                    to="/signup"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     S.H.S
                   </Link>
                   <Link
-                    to="/signup"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Tertiary
