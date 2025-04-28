@@ -1,12 +1,20 @@
 import React from "react";
 import { Twitter, Linkedin, Youtube, Mail, ArrowUp } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Footer = () => {
-  const scrollToTop = () => {
+  const navigate = useNavigate(); // Initialize navigate hook
+
+  // Modified function to navigate to homepage
+  const navigateToHome = () => {
+    // You can still scroll to top before navigating if you want
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+
+    // Navigate to the home page
+    navigate("/");
   };
 
   return (
@@ -137,12 +145,12 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Back to Top Button Column */}
+          {/* Back to Top Button Column - Changed to navigate to home */}
           <div className="flex items-start justify-end">
             <button
-              onClick={scrollToTop}
+              onClick={navigateToHome}
               className="bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition-colors focus:outline-none"
-              aria-label="Back to top"
+              aria-label="Back to home"
             >
               <ArrowUp size={20} />
             </button>
