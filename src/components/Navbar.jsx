@@ -60,13 +60,13 @@ const Navbar = () => {
               {activeDropdown === "students" && (
                 <div className="absolute mt-2 left-0 bg-white shadow-lg rounded-md py-2 w-48 z-50">
                   <Link
-                    to="/signup"
+                    to="/tutors"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Find Tutor
                   </Link>
                   <Link
-                    to="/"
+                    to="/footer"
                     className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     Contact Us
@@ -178,13 +178,13 @@ const Navbar = () => {
               {activeDropdown === "mobile-students" && (
                 <div className="pl-4 mt-1">
                   <Link
-                    to="/find-tutor"
+                    to="/tutors"
                     className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     Find Tutor
                   </Link>
                   <Link
-                    to="/contact-us"
+                    to="/footer"
                     className="block py-2 text-gray-600 hover:text-blue-600"
                   >
                     Contact Us

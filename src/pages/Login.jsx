@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ArrowLeft } from "lucide-react";
+import image from "../assets/images/hero-2.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const Login = () => {
         formData,
         {
           headers: { "Content-Type": "application/json" },
-          timeout: 10000
+          timeout: 10000,
         }
       );
 
@@ -37,7 +39,7 @@ const Login = () => {
       const normalizedUser = {
         ...user,
         _id: user._id || user.id, // Standardize on _id
-        role: user.role || "student" // Default role if not provided
+        role: user.role || "student", // Default role if not provided
       };
 
       // Store authentication data
@@ -47,25 +49,60 @@ const Login = () => {
       // Handle redirection based on role
       if (normalizedUser.role === "tutor") {
         localStorage.setItem("tutorId", normalizedUser._id);
-        navigate(user.photo?.includes("ui-avatars.com") ? "/tutor/profile" : "/tutordash");
+        navigate(
+          user.photo?.includes("ui-avatars.com")
+            ? "/tutor/profile"
+            : "/tutordash"
+        );
       } else {
         navigate("/studentdash");
       }
-
     } catch (err) {
       console.error("Login error:", err);
-      setError(err.response?.data?.message || err.message || "Login failed. Please try again.");
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Login failed. Please try again."
+      );
       localStorage.clear();
     } finally {
       setLoading(false);
     }
   };
 
+  const goBack = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 shadow-lg rounded-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-4">Login</h2>
-        
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
+      {/* Background image */}
+      <img
+        src={image}
+        alt="Mountain landscape background"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/80 bg-opacity-50"></div>
+
+      {/* Back button */}
+      <div className="absolute top-4 left-4 z-10">
+        <button
+          onClick={goBack}
+          className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          aria-label="Go back to home"
+        >
+          <ArrowLeft size={24} color="#374151" />
+        </button>
+      </div>
+
+      {/* Login form */}
+      <div className="bg-white bg-opacity-90 p-8 shadow-lg rounded-lg w-full max-w-md z-10">
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-4">
+          Login
+        </h2>
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block font-semibold text-gray-700">Email</label>
@@ -80,7 +117,9 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-gray-700">Password</label>
+            <label className="block font-semibold text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -103,13 +142,18 @@ const Login = () => {
                 <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>
                 Logging in...
               </span>
-            ) : "Login"}
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-500 mt-4">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-600 font-semibold hover:underline">
+          <a
+            href="/signup"
+            className="text-blue-600 font-semibold hover:underline"
+          >
             Sign Up
           </a>
         </p>

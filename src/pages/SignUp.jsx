@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import learningImage from "../assets/images/learning-bg.jpg";
+import { ArrowLeft } from "lucide-react";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -28,21 +29,21 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "https://studyhub-api-p0q4.onrender.com/signup", 
+        "https://studyhub-api-p0q4.onrender.com/signup",
         formData
       );
-      
+
       if (response.data.success) {
-        navigate("/login", { 
-          state: { successMessage: "Registration successful! Please login." } 
+        navigate("/login", {
+          state: { successMessage: "Registration successful! Please login." },
         });
       } else {
         setError(response.data.message || "Registration failed");
       }
     } catch (err) {
       setError(
-        err.response?.data?.message || 
-        "An error occurred during registration. Please try again."
+        err.response?.data?.message ||
+          "An error occurred during registration. Please try again."
       );
     } finally {
       setLoading(false);
@@ -55,6 +56,13 @@ const SignUp = () => {
       <div className="relative h-64 md:h-80 bg-blue-700 overflow-hidden">
         <div className="absolute inset-0 bg-blue-800/70 flex items-center justify-center">
           <div className="text-center px-4 z-10">
+            {/* Back Arrow */}
+            <button
+              onClick={() => navigate("/")}
+              className="absolute top-4 left-4 p-2 rounded-full bg-white/50 text-white hover:bg-white/80 focus:outline-none"
+            >
+              <ArrowLeft className="w-6 h-6" />
+            </button>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
               Start Your Learning Journey
             </h1>
@@ -188,14 +196,32 @@ const SignUp = () => {
                   type="submit"
                   disabled={loading}
                   className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition ${
-                    loading ? "opacity-70 cursor-not-allowed" : "hover:shadow-md"
+                    loading
+                      ? "opacity-70 cursor-not-allowed"
+                      : "hover:shadow-md"
                   }`}
                 >
                   {loading ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Creating Account...
                     </span>
@@ -231,7 +257,8 @@ const SignUp = () => {
                     Transform Your Learning Experience
                   </h3>
                   <p className="text-blue-100">
-                    Join thousands of students and tutors who are achieving their educational goals together.
+                    Join thousands of students and tutors who are achieving
+                    their educational goals together.
                   </p>
                 </div>
               </div>
