@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiX, FiClock } from "react-icons/fi";
+import { FiX, FiClock, FiCalendar, FiBook, FiMessageSquare, FiVideo } from "react-icons/fi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -11,10 +11,28 @@ const BookingModal = ({ tutor, onClose }) => {
     date: new Date(),
     startTime: "",
     endTime: "",
-    platform: "Google Meet",
+    sessionType: "online",
+    platform: "Zoom",
+    link: "",
     instructions: "",
+    location: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Generate random meeting links
+  const generateMeetingLink = (platform) => {
+    const randomId = Math.random().toString(36).substring(2, 10);
+    switch (platform) {
+      case "Zoom":
+        return `https://zoom.us/j/${randomId}`;
+      case "Google Meet":
+        return `https://meet.google.com/${randomId.slice(0, 3)}-${randomId.slice(3, 6)}-${randomId.slice(6)}`;
+      case "Microsoft Teams":
+        return `https://teams.microsoft.com/l/meetup-join/19:${randomId}@thread.tacv2`;
+      default:
+        return "";
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +41,23 @@ const BookingModal = ({ tutor, onClose }) => {
 
   const handleDateChange = (date) => {
     setFormData((prev) => ({ ...prev, date }));
+  };
+
+  const handleSessionTypeChange = (type) => {
+    setFormData(prev => ({
+      ...prev,
+      sessionType: type,
+      platform: type === "online" ? "Zoom" : "",
+      link: type === "online" ? generateMeetingLink("Zoom") : ""
+    }));
+  };
+
+  const handlePlatformChange = (platform) => {
+    setFormData(prev => ({
+      ...prev,
+      platform,
+      link: generateMeetingLink(platform)
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -39,25 +74,30 @@ const BookingModal = ({ tutor, onClose }) => {
       return;
     }
 
+    if (formData.sessionType === "in-person" && !formData.location) {
+      toast.error("Please provide a meeting location");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Format the date to ISO string
-      const formattedDate = formData.date.toISOString();
-      
       const bookingData = {
-        tutor: tutor.id,         // Only include tutor ID in the body
+        tutor: tutor._id,
         subject: formData.subject,
-        date: formattedDate,      // Send as ISO string
-        timeSlot: {               // Required nested object
+        date: formData.date.toISOString(),
+        timeSlot: {
           start: formData.startTime,
           end: formData.endTime
         },
-        meetingDetails: {         // Required nested object
+        sessionType: formData.sessionType,
+        meetingDetails: formData.sessionType === "online" ? {
           platform: formData.platform,
-          instructions: formData.instructions
-        }
-        // Don't include student ID - it will come from auth token
+          link: formData.link
+        } : {
+          location: formData.location
+        },
+        instructions: formData.instructions
       };
 
       const response = await axios.post(
@@ -71,26 +111,14 @@ const BookingModal = ({ tutor, onClose }) => {
         }
       );
 
-      if (response.data.success) {
-        toast.success("Booking created successfully!");
-        onClose(true);
-      } else {
-        throw new Error(response.data.message || "Booking failed");
-      }
+      toast.success("Booking created successfully!");
+      onClose(true);
     } catch (error) {
       console.error("Booking error:", error);
       const errorMessage = error.response?.data?.message || 
                          error.response?.data?.error || 
                          "Failed to create booking";
       toast.error(errorMessage);
-      
-      if (error.response) {
-        console.error("Error details:", {
-          status: error.response.status,
-          data: error.response.data,
-          headers: error.response.headers
-        });
-      }
     } finally {
       setIsSubmitting(false);
     }
@@ -111,7 +139,7 @@ const BookingModal = ({ tutor, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={() => onClose(false)}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -119,21 +147,34 @@ const BookingModal = ({ tutor, onClose }) => {
           <FiX className="h-6 w-6" />
         </button>
 
-        <h3 className="text-xl font-bold text-gray-800 mb-4">
-          Book Session with {tutor.firstName} {tutor.lastName}
-        </h3>
+        <div className="flex items-center mb-6">
+          <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-4">
+            {tutor.profilePicture ? (
+              <img src={tutor.profilePicture} alt={tutor.name} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-2xl text-gray-500">{tutor.firstName?.charAt(0)}{tutor.lastName?.charAt(0)}</span>
+            )}
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-gray-800">
+              Book Session with {tutor.firstName} {tutor.lastName}
+            </h3>
+            <p className="text-gray-600">{tutor.specialization}</p>
+          </div>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Subject */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+              <FiBook className="mr-2" />
               Subject
             </label>
             <select
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             >
               {tutor.subjects?.map((subject, index) => (
@@ -146,14 +187,15 @@ const BookingModal = ({ tutor, onClose }) => {
 
           {/* Date */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+              <FiCalendar className="mr-2" />
               Date
             </label>
             <DatePicker
               selected={formData.date}
               onChange={handleDateChange}
               minDate={new Date()}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
@@ -161,75 +203,134 @@ const BookingModal = ({ tutor, onClose }) => {
           {/* Time Slot */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <FiClock className="mr-2" />
                 Start Time
               </label>
-              <div className="relative">
-                <FiClock className="absolute left-3 top-3 text-gray-400" />
-                <select
-                  name="startTime"
-                  value={formData.startTime}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="">Select time</option>
-                  {timeSlots.map((time, index) => (
-                    <option key={`start-${index}`} value={time}>
+              <select
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              >
+                <option value="">Select time</option>
+                {timeSlots.map((time, index) => (
+                  <option key={`start-${index}`} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <FiClock className="mr-2" />
+                End Time
+              </label>
+              <select
+                name="endTime"
+                value={formData.endTime}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              >
+                <option value="">Select time</option>
+                {timeSlots
+                  .filter(time => !formData.startTime || time > formData.startTime)
+                  .map((time, index) => (
+                    <option key={`end-${index}`} value={time}>
                       {time}
                     </option>
                   ))}
-                </select>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                End Time
-              </label>
-              <div className="relative">
-                <FiClock className="absolute left-3 top-3 text-gray-400" />
-                <select
-                  name="endTime"
-                  value={formData.endTime}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="">Select time</option>
-                  {timeSlots
-                    .filter(time => !formData.startTime || time > formData.startTime)
-                    .map((time, index) => (
-                      <option key={`end-${index}`} value={time}>
-                        {time}
-                      </option>
-                    ))}
-                </select>
-              </div>
+              </select>
             </div>
           </div>
 
-          {/* Platform */}
+          {/* Session Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Meeting Platform
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Session Type *
             </label>
-            <select
-              name="platform"
-              value={formData.platform}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="Google Meet">Google Meet</option>
-              <option value="Zoom">Zoom</option>
-              <option value="Microsoft Teams">Microsoft Teams</option>
-              <option value="Other">Other</option>
-            </select>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={() => handleSessionTypeChange("online")}
+                className={`px-4 py-2 rounded-lg border-2 ${formData.sessionType === "online" ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}
+              >
+                Online
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSessionTypeChange("in-person")}
+                className={`px-4 py-2 rounded-lg border-2 ${formData.sessionType === "in-person" ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}
+              >
+                In-Person
+              </button>
+            </div>
           </div>
+
+          {/* Online Meeting Details */}
+          {formData.sessionType === "online" && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <FiVideo className="mr-2" />
+                  Platform *
+                </label>
+                <select
+                  name="platform"
+                  value={formData.platform}
+                  onChange={(e) => handlePlatformChange(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                >
+                  <option value="Zoom">Zoom</option>
+                  <option value="Google Meet">Google Meet</option>
+                  <option value="Microsoft Teams">Microsoft Teams</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <FiVideo className="mr-2" />
+                  Meeting Link *
+                </label>
+                <input
+                  type="url"
+                  name="link"
+                  value={formData.link}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Meeting link will be generated automatically"
+                  required
+                />
+                <p className="text-xs text-gray-500 mt-1">We've generated a {formData.platform} link for you</p>
+              </div>
+            </>
+          )}
+
+          {/* In-Person Location */}
+          {formData.sessionType === "in-person" && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <FiCalendar className="mr-2" />
+                Meeting Location *
+              </label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter meeting address"
+                required
+              />
+            </div>
+          )}
 
           {/* Instructions */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+              <FiMessageSquare className="mr-2" />
               Additional Instructions
             </label>
             <textarea
@@ -237,7 +338,7 @@ const BookingModal = ({ tutor, onClose }) => {
               value={formData.instructions}
               onChange={handleChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Any special requirements..."
             />
           </div>
@@ -247,14 +348,14 @@ const BookingModal = ({ tutor, onClose }) => {
             <button
               type="button"
               onClick={() => onClose(false)}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 flex items-center"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center"
             >
               {isSubmitting ? (
                 <>

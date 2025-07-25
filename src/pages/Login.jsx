@@ -95,71 +95,71 @@ const Login = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-indigo-900/80"></div>
         {/* Additional pattern overlay */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-60 h-60 bg-white rounded-full -translate-x-30 -translate-y-30"></div>
-          <div className="absolute top-40 right-20 w-80 h-80 bg-white rounded-full translate-x-40 -translate-y-40"></div>
-          <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-white rounded-full translate-y-48"></div>
+          <div className="absolute top-0 left-0 w-24 h-24 bg-white rounded-full -translate-x-12 -translate-y-12"></div>
+          <div className="absolute top-20 right-8 w-32 h-32 bg-white rounded-full translate-x-16 -translate-y-16"></div>
+          <div className="absolute bottom-0 left-1/3 w-40 h-40 bg-white rounded-full translate-y-20"></div>
         </div>
       </div>
 
       {/* Floating decorative elements */}
-      <div className="absolute top-20 left-20 w-4 h-4 bg-blue-400 rounded-full animate-bounce opacity-60"></div>
-      <div className="absolute top-60 right-40 w-3 h-3 bg-purple-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '0.5s'}}></div>
-      <div className="absolute bottom-40 left-60 w-5 h-5 bg-yellow-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '1s'}}></div>
+      <div className="absolute top-12 left-12 w-2 h-2 bg-blue-400 rounded-full animate-bounce opacity-60"></div>
+      <div className="absolute top-32 right-20 w-1.5 h-1.5 bg-purple-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '0.5s'}}></div>
+      <div className="absolute bottom-20 left-32 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '1s'}}></div>
 
       {/* Back button */}
-      <div className="absolute top-8 left-8 z-20">
+      <div className="absolute top-4 left-4 z-20">
         <button
           onClick={goBack}
-          className="group bg-white/20 backdrop-blur-sm p-4 rounded-2xl shadow-2xl hover:bg-white/30 transition-all duration-300 border border-white/20 hover:scale-110"
+          className="group bg-white/20 backdrop-blur-sm p-2 rounded-xl shadow-xl hover:bg-white/30 transition-all duration-300 border border-white/20 hover:scale-110"
           aria-label="Go back to home"
         >
-          <ArrowLeft size={24} className="text-white group-hover:text-blue-100 transition-colors duration-300" />
+          <ArrowLeft size={16} className="text-white group-hover:text-blue-100 transition-colors duration-300" />
         </button>
       </div>
 
       {/* Login form */}
-      <div className="relative z-10 w-full max-w-lg mx-6">
+      <div className="relative z-10 w-full max-w-sm mx-4">
         {/* Decorative gradient border */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-3xl blur opacity-30"></div>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-2xl blur opacity-30"></div>
         
-        <div className="relative bg-white/95 backdrop-blur-lg p-10 md:p-12 shadow-2xl rounded-3xl border border-white/20">
+        <div className="relative bg-white/95 backdrop-blur-lg p-4 md:p-5 shadow-xl rounded-2xl border border-white/20">
           {/* Header section */}
-          <div className="text-center mb-10">
-            <div className="inline-block bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-6 py-3 rounded-full text-base font-bold mb-6 shadow-lg border border-blue-200/50">
+          <div className="text-center mb-4">
+            <div className="inline-block bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-md border border-blue-200/50">
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 🔐 Welcome Back
               </span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
-              Sign In to Your Account
+            <h2 className="text-xl md:text-xl font-black text-gray-900 mb-2">
+              Sign In
             </h2>
-            <p className="text-lg text-gray-600 font-medium">
-              Continue your learning journey with us
+            <p className="text-sm text-gray-600 font-medium">
+              Continue your learning
             </p>
           </div>
 
           {/* Error message */}
           {error && (
-            <div className="mb-8 p-6 bg-red-50/80 backdrop-blur-sm border-l-4 border-red-500 text-red-700 rounded-2xl shadow-lg">
+            <div className="mb-4 p-3 bg-red-50/80 backdrop-blur-sm border-l-4 border-red-500 text-red-700 rounded-xl shadow-md">
               <div className="flex items-start">
-                <svg className="h-6 w-6 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="h-4 w-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
-                <p className="ml-3 text-base font-medium">{error}</p>
+                <p className="ml-2 text-sm font-medium">{error}</p>
               </div>
             </div>
           )}
 
-          <form className="space-y-8" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Email field */}
             <div>
-              <label className="block text-base font-bold text-gray-800 mb-3">
-                Email Address
+              <label className="block text-sm font-bold text-gray-800 mb-2">
+                Email
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-6 w-6 text-gray-400" />
+                <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                  <Mail className="h-4 w-4 text-gray-400" />
                 </div>
                 <input
                   type="email"
@@ -167,7 +167,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 placeholder-gray-400 text-lg bg-gray-50/50 hover:bg-white"
+                  className="w-full pl-8 pr-3 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 placeholder-gray-400 text-sm bg-gray-50/50 hover:bg-white"
                   placeholder="your@email.com"
                 />
               </div>
@@ -175,12 +175,12 @@ const Login = () => {
 
             {/* Password field */}
             <div>
-              <label className="block text-base font-bold text-gray-800 mb-3">
+              <label className="block text-sm font-bold text-gray-800 mb-2">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-6 w-6 text-gray-400" />
+                <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                  <Lock className="h-4 w-4 text-gray-400" />
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -188,18 +188,18 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-14 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 placeholder-gray-400 text-lg bg-gray-50/50 hover:bg-white"
+                  className="w-full pl-8 pr-8 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 placeholder-gray-400 text-sm bg-gray-50/50 hover:bg-white"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                  className="absolute inset-y-0 right-0 pr-2 flex items-center text-gray-500 hover:text-gray-700 transition-colors duration-200"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-6 w-6" />
+                    <EyeOff className="h-4 w-4" />
                   ) : (
-                    <Eye className="h-6 w-6" />
+                    <Eye className="h-4 w-4" />
                   )}
                 </button>
               </div>
@@ -209,16 +209,16 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-black text-xl py-5 rounded-2xl transition-all duration-300 shadow-2xl ${
+              className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-black text-base py-3 rounded-xl transition-all duration-300 shadow-xl ${
                 loading
                   ? "opacity-70 cursor-not-allowed"
-                  : "hover:shadow-3xl transform hover:-translate-y-1"
+                  : "hover:shadow-2xl transform hover:-translate-y-0.5"
               }`}
             >
               {loading ? (
                 <span className="flex items-center justify-center">
                   <svg
-                    className="animate-spin -ml-1 mr-4 h-6 w-6 text-white"
+                    className="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -237,7 +237,7 @@ const Login = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Signing you in...
+                  Signing in...
                 </span>
               ) : (
                 "Sign In"
@@ -246,8 +246,8 @@ const Login = () => {
           </form>
 
           {/* Footer links */}
-          <div className="mt-8 text-center space-y-4">
-            <div className="text-base text-gray-600">
+          <div className="mt-4 text-center space-y-2">
+            <div className="text-sm text-gray-600">
               Don't have an account?{" "}
               <a
                 href="/signup"
@@ -261,20 +261,20 @@ const Login = () => {
               href="/forgot-password"
               className="block text-blue-600 font-bold hover:text-blue-800 underline decoration-2 underline-offset-2 transition-colors duration-300"
             >
-              Forgot your password?
+              Forgot password?
             </a>
           </div>
 
           {/* Social proof */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <div className="flex items-center justify-center space-x-8 text-gray-500">
+          <div className="mt-4 pt-3 border-t border-gray-200">
+            <div className="flex items-center justify-center space-x-4 text-gray-500">
               <div className="flex items-center">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                <span className="text-sm font-medium">Secure Login</span>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1 animate-pulse"></div>
+                <span className="text-xs font-medium">Secure Login</span>
               </div>
               <div className="flex items-center">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse" style={{animationDelay: '0.5s'}}></div>
-                <span className="text-sm font-medium">10K+ Users</span>
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                <span className="text-xs font-medium">10K+ Users</span>
               </div>
             </div>
           </div>
